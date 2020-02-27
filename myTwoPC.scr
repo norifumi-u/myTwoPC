@@ -1,0 +1,24 @@
+module myTwoPC;
+
+global protocol MyTwoPC(role Co1, role Co2, role Pr1, role Pr2) {
+
+       rec t1 {
+       	 choice at Pr1 {
+           supply() from Pr1 to Co1;
+           continue t1;
+       	 } or {
+           eos() from Pr1 to Co1;
+       	 }
+       }
+
+       rec t2 {
+         choice at Pr2 {
+           supply() from Pr2 to Co2;
+           continue t2;
+         } or {
+           eos() from Pr2 to Co2;
+         }
+       }
+
+       join() from Co1 to Co2;
+}
